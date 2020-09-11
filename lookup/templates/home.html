@@ -2,7 +2,37 @@
 
 {% block content %}
 
-<h1>Hello world</h1>
+<br/>
+{% if api_result %}
+  {% if api_result == "Error..." %}
+    There was een error, please try again..
+  {% else %}
+    <div class="jumbotron">
+      <h1 class="display-5">Lokatie: {{ api_result.jsongetij.0.plaats }}</h1>
+      <p class="lead">
+        Datum: {{ api_result.jsongetij.1.tijden.0.datum }} <br/>
+        Maanfase: {{ api_result.jsongetij.0.phase }} <br/>
+        Zon op: {{ api_result.jsongetij.0.sup }}<br/>
+        Zon onder: {{ api_result.jsongetij.0.sunder }}
+       
+      </p>
+      <hr class="my-4">
+      <ul>
+        {% for waterstand in standenlijst %}
+          <li>
+            {{ waterstand.datum }} 
+            {{ waterstand.uur }} 
+            {{ waterstand.zw }} 
+            {{ waterstand.getij }} 
+            {{ waterstand.verschil }} 
+            {{ waterstand.latniveau }} 
+            {{ waterstand.offset }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endif %}
 
 {% endblock %}
 
